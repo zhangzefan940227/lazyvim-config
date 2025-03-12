@@ -6,6 +6,7 @@ local opt = vim.opt
 opt.relativenumber = false
 opt.timeoutlen = 200 -- Lower than default (1000) to quickly trigger which-key
 opt.undolevels = 1000
+opt.tabstop = 4 -- Number of spaces tabs count for
 -- 直接返回，不执行下面的内容，写在下面只是方便查阅
 if true then
     return {}
