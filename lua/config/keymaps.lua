@@ -15,8 +15,11 @@ keymap.set("v", "p", "_dp", { silent = true })
 keymap.set("n", "<A-h>", "^")
 keymap.set("v", "<A-h>", "^")
 
-keymap.set("n", "<A-l>", "$")
-keymap.set("v", "<A-l>", "$")
+keymap.set({ "i", "v", "n" }, "<A-l>", "$")
+
+keymap.set({ "v", "n" }, "<S-j>", "<C-o>")
+keymap.set({ "v", "n" }, "<S-k>", "<C-i>")
+keymap.set({ "i", "v", "n" }, "<C-f>", "/")
 
 -- hop easy motion
 unmap("n", "<leader><space>", { desc = "Find Files (root dir)" })
