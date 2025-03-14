@@ -5,22 +5,46 @@
 local keymap = vim.keymap
 local unmap = vim.keymap.del
 local map = vim.keymap.set
-
+local api_keymap = vim.api.nvim_set_keymap
 keymap.set("i", "jk", "<Esc>")
 
 -- 复制粘贴时不会替换掉保存在寄存器中的内容
 keymap.set("v", "p", "_dp", { silent = true })
 
 -- Alt+H 光标到这行代码的最前端
-keymap.set("n", "<A-h>", "^")
-keymap.set("v", "<A-h>", "^")
+keymap.set({ "n", "i", "v" }, "<A-h>", "^")
 
-keymap.set({ "i", "v", "n" }, "<A-l>", "$")
+-- Alt+L 光标到这行代码的末尾
+keymap.set({ "n", "i", "v" }, "<A-l>", "$")
 
+-- 设置 Shift+J 为退到上一个光标处
 keymap.set({ "v", "n" }, "<S-j>", "<C-o>")
+-- 设置 Shift+J 为回到当前光标处
 keymap.set({ "v", "n" }, "<S-k>", "<C-i>")
+-- 设置 Ctrl+f 为搜索
 keymap.set({ "i", "v", "n" }, "<C-f>", "/")
 
+-- 设置 gd 跳转到方法定义
+api_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
+
+-- 设置 ga 跳转到方法实现
+api_keymap("n", "ga", "<cmd>lua vim.lsp.buf.implementation()<CR>", { noremap = true, silent = true })
+
+-- 查找引用
+api_keymap("n", "ga", "<cmd>lua vim.lsp.buf.references()<CR>", { noremap = true, silent = true })
+
+-- 设置 j 返回到上一个光标位置
+api_keymap("n", "j", "<c-o>", { noremap = true, silent = true })
+
+-- 设置 H 跳转到下一个光标位置
+api_keymap("n", "K", "<C-I>", { noremap = true, silent = true })
+
+-- 设置 Ctrl-a 为全选
+api_keymap("n", "<C-a>", "ggVG", { noremap = true, silent = true })
+api_keymap("v", "<C-a>", "<Esc>ggVG", { noremap = true, silent = true })
+
+-- 设置 Ctrl-w 为删除当前缓冲区
+api_keymap("n", "<C-w>", "<cmd>bdelete | bp<CR>", { noremap = true, silent = true })
 -- hop easy motion
 unmap("n", "<leader><space>", { desc = "Find Files (root dir)" })
 -- for hop.nvim

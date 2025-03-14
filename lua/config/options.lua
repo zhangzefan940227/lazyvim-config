@@ -6,10 +6,10 @@ local opt = vim.opt
 opt.relativenumber = false
 opt.timeoutlen = 200 -- Lower than default (1000) to quickly trigger which-key
 opt.undolevels = 1000
-opt.tabstop = 4 -- Number of spaces tabs count for
-opt.expandtab = true
-opt.shiftwidth = 4 -- Size of an indent
-
+opt.tabstop = 4 -- 一个 Tab 显示为 4 个空格
+opt.shiftwidth = 4 -- 自动缩进时使用 4 个空格
+opt.softtabstop = 4 -- 按退格键时删除 4 个空格
+opt.expandtab = true -- 将 Tab 转换为空格
 -- 直接返回，不执行下面的内容，写在下面只是方便查阅
 if true then
     return {}
