@@ -34,7 +34,7 @@ api_keymap("n", "ga", "<cmd>lua vim.lsp.buf.implementation()<CR>", { noremap = t
 api_keymap("n", "ga", "<cmd>lua vim.lsp.buf.references()<CR>", { noremap = true, silent = true })
 
 -- 设置 j 返回到上一个光标位置
-api_keymap("n", "j", "<c-o>", { noremap = true, silent = true })
+api_keymap("n", "J", "<c-o>", { noremap = true, silent = true })
 
 -- 设置 H 跳转到下一个光标位置
 api_keymap("n", "K", "<C-I>", { noremap = true, silent = true })
