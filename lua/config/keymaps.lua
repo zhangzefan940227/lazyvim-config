@@ -14,13 +14,25 @@ unmap("n", "<leader>K", { desc = "Keywordprg" })
 unmap("n", "<leader>`", { desc = "Switch to Other Buffer" })
 unmap("n", "<leader>?", { desc = "Buffer keymaps(which_key)" })
 unmap("n", "<leader>L", { desc = "Lazy Changelog" })
+unmap("n", "t", { desc = "other" })
 ----------------- delete unused keymaps end ------------------------
+-- copy
+keymap.set("n", "<C-c>", '"+yy', { noremap = true, silent = true, desc = "Copy all line" })
+keymap.set("v", "<C-c>", '"+y', { noremap = true, silent = true, desc = "Copy word" })
+-- paste
+keymap.set("n", "<C-v>", '"+p', { noremap = true, silent = true, desc = "Paste from system clipboard" })
+keymap.set("i", "<C-v>", '"+p', { noremap = true, silent = true, desc = "Paste from system clipboard" })
 
+-- Esc
 keymap.set("i", "jk", "<Esc>")
+keymap.set("i", "jj", "<Esc>")
 
 -- split vertical / horizonal
 keymap.set("n", "<leader>wv", "<C-w>v", { desc = "Split Window Right" })
 keymap.set("n", "<leader>wh", "<C-w>s", { desc = "Split Window Below" })
+
+-- Terminal Buffer
+keymap.set({ "v", "n" }, "<leader>t", ":term<CR>", { desc = "Terminal Buffer" })
 
 -- redo
 keymap.set("n", "U", "<C-r>", { desc = "Redo" })
