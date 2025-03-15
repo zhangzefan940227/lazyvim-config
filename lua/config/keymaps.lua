@@ -17,11 +17,15 @@ unmap("n", "<leader>L", { desc = "Lazy Changelog" })
 unmap("n", "t", { desc = "other" })
 ----------------- delete unused keymaps end ------------------------
 -- copy
+keymap.set("n", "yy", '"+yy', { noremap = true, silent = true, desc = "Copy all line" })
+keymap.set("v", "y", '"+y', { noremap = true, silent = true, desc = "Copy all line" })
 keymap.set("n", "<C-c>", '"+yy', { noremap = true, silent = true, desc = "Copy all line" })
 keymap.set("v", "<C-c>", '"+y', { noremap = true, silent = true, desc = "Copy word" })
 -- paste
+keymap.set("n", "p", '"+p', { noremap = true, silent = true, desc = "Paste from system clipboard" })
+keymap.set("v", "p", '"+p', { noremap = true, silent = true, desc = "Paste from system clipboard" })
 keymap.set("n", "<C-v>", '"+p', { noremap = true, silent = true, desc = "Paste from system clipboard" })
-keymap.set("i", "<C-v>", '"+p', { noremap = true, silent = true, desc = "Paste from system clipboard" })
+keymap.set("i", "<C-v>", '<Esc>"+p', { noremap = true, silent = true, desc = "Paste from system clipboard" })
 
 -- Esc
 keymap.set("i", "jk", "<Esc>")

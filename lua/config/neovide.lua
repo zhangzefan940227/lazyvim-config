@@ -18,4 +18,17 @@ if vim.g.neovide then
     vim.g.neovide_transparency = 0.9
 
     vim.opt.clipboard = "unnamedplus"
+    vim.g.neovide_refresh_rate = 120
+    vim.g.neovide_cursor_trail_size = 0.6
+    vim.keymap.set("n", "<F11>", function()
+        vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen
+    end, { noremap = true, silent = true, desc = "Toggle fullscreen" })
+
+    vim.keymap.set("i", "<F11>", function()
+        vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen
+    end, { noremap = true, silent = true, desc = "Toggle fullscreen" })
+
+    vim.keymap.set("v", "<F11>", function()
+        vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen
+    end, { noremap = true, silent = true, desc = "Toggle fullscreen" })
 end
