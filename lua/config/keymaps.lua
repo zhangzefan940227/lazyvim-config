@@ -64,14 +64,6 @@ set("n", "<CR>", "o<Esc>", { noremap = true, silent = true, desc = "Enter" })
 set("i", "jk", "<Esc>")
 set("i", "jj", "<Esc>")
 
----------- Session ----------
-set("n", "<leader>qS", function()
-    require("persistence").load()
-end, { "Restore Session" })
-set("n", "<leader>qs", function()
-    require("persistence").selece()
-end, { "Restore Session" })
-
 -- split vertical / horizonal
 set("n", "<leader>wv", "<C-w>v", { desc = "Split Window Right" })
 set("n", "<leader>wh", "<C-w>s", { desc = "Split Window Below" })
