@@ -2,62 +2,94 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
-local keymap = vim.keymap
-local unmap = vim.keymap.del
+-- for keymap
+local del = vim.keymap.del
+local set = vim.keymap.set
 local api_keymap = vim.api.nvim_set_keymap
 
------------------ delete unused keymaps begin ------------------------
-unmap("n", "<leader><space>", { desc = "Find Files (root dir)" })
-unmap("n", "<leader>-", { desc = "Split Window Below" })
-unmap("n", "<leader>|", { desc = "Split Window Right" })
-unmap("n", "<leader>K", { desc = "Keywordprg" })
-unmap("n", "<leader>`", { desc = "Switch to Other Buffer" })
-unmap("n", "<leader>?", { desc = "Buffer keymaps(which_key)" })
-unmap("n", "<leader>L", { desc = "Lazy Changelog" })
-unmap("n", "t", { desc = "other" })
+-- for hop.nvim
+local hop = require("hop")
+local directions = require("hop.hint").HintDirection
+local positions = require("hop.hint").HintPosition
+--------------------------------------------------------------------
+----------------- delete unused keymaps begin ----------------------
+del("n", "<leader><space>", { desc = "find files (root dir)" })
+del("n", "<leader>-", { desc = "split window below" })
+del("n", "<leader>|", { desc = "split window right" })
+del("n", "<leader>`", { desc = "switch to other buffer" })
+del("n", "<leader>?", { desc = "buffer keymaps(which_key)" })
+del("n", "<leader>K", { desc = "Keywordprg" })
+del("n", "<leader>L", { desc = "LazyVim ChangeLog" })
+del("n", "<leader>l", { desc = "lazy changelog" })
+del("n", "t", { desc = "other" })
+del("n", "<leader>qq")
+set("n", "q", "<nop>", { desc = "record a macro" })
 ----------------- delete unused keymaps end ------------------------
--- copy
-keymap.set("n", "yy", '"+yy', { noremap = true, silent = true, desc = "Copy all line" })
-keymap.set("v", "y", '"+y', { noremap = true, silent = true, desc = "Copy all line" })
-keymap.set("n", "<C-c>", '"+yy', { noremap = true, silent = true, desc = "Copy all line" })
-keymap.set("v", "<C-c>", '"+y', { noremap = true, silent = true, desc = "Copy word" })
--- paste
-keymap.set("n", "p", '"+p', { noremap = true, silent = true, desc = "Paste from system clipboard" })
-keymap.set("v", "p", '"+p', { noremap = true, silent = true, desc = "Paste from system clipboard" })
-keymap.set("n", "<C-v>", '"+p', { noremap = true, silent = true, desc = "Paste from system clipboard" })
-keymap.set("i", "<C-v>", '<Esc>"+p', { noremap = true, silent = true, desc = "Paste from system clipboard" })
+--------------------------------------------------------------------
+
+--------------------------------------------------------------------
+----------------- modify keymaps begin -----------------------------
+
+---------- copy ----------
+set("n", "yy", '"+yy', { noremap = true, silent = true, desc = "Copy all line" })
+set("v", "y", '"+y', { noremap = true, silent = true, desc = "Copy all line" })
+set("n", "<C-c>", '"+yy', { noremap = true, silent = true, desc = "Copy all line" })
+set("v", "<C-c>", '"+y', { noremap = true, silent = true, desc = "Copy word" })
+---------- paste ---------
+set("n", "p", '"+p', { noremap = true, silent = true, desc = "Paste from system clipboard" })
+set("v", "p", '"+p', { noremap = true, silent = true, desc = "Paste and Replace Word" })
+set("n", "<C-v>", '"+p', { noremap = true, silent = true, desc = "Paste from system clipboard" })
+set("i", "<C-v>", "<C-r>+", { noremap = true, silent = true, desc = "Paste from system clipboard" })
+
+---------- cut ----------
+set("n", "dd", '"+dd', { noremap = true, silent = true, desc = "Cut All Line" })
+set("v", "d", '"+d', { noremap = true, silent = true, desc = "Cut Word" })
+set("n", "<C-x>", '"+dd', { noremap = true, silent = true, desc = "Cut All Line" })
+set("v", "<C-x>", '"+d', { noremap = true, silent = true, desc = "Cut Word" })
+-- 在命令行模式中映射 Ctrl+V 为粘贴系统剪切板内容
+set("c", "<C-v>", "<C-R>+\\>", { noremap = true, silent = true, desc = "Paste from system clipboard" })
+
+--------- quit ----------
+set("n", "qq", "<cmd>qa<CR>", { noremap = true, desc = "Quit All" })
+set("n", "<C-w>", "<cmd>wq<CR>", { noremap = true, desc = "Quit All" })
+
+--------- save ----------
+set("n", "<leader>fs", "<cmd>w<cr><esc>", { noremap = true, desc = "save" })
+
+-- Enter
+set("n", "<CR>", "o<Esc>", { noremap = true, silent = true, desc = "Enter" })
 
 -- Esc
-keymap.set("i", "jk", "<Esc>")
-keymap.set("i", "jj", "<Esc>")
+set("i", "jk", "<Esc>")
+set("i", "jj", "<Esc>")
 
 -- split vertical / horizonal
-keymap.set("n", "<leader>wv", "<C-w>v", { desc = "Split Window Right" })
-keymap.set("n", "<leader>wh", "<C-w>s", { desc = "Split Window Below" })
+set("n", "<leader>wv", "<C-w>v", { desc = "Split Window Right" })
+set("n", "<leader>wh", "<C-w>s", { desc = "Split Window Below" })
 
 -- Terminal Buffer
-keymap.set({ "v", "n" }, "<leader>t", ":term<CR>", { desc = "Terminal Buffer" })
+set({ "v", "n" }, "<leader>t", ":term<CR>", { desc = "Terminal Buffer" })
 
 -- redo
-keymap.set("n", "U", "<C-r>", { desc = "Redo" })
+set("n", "U", "<C-r>", { desc = "Redo" })
 
 -- no highlights
-keymap.set("n", "<leader>nl", ":nohl<CR>", { desc = "no highlights" })
+set("n", "<leader>nl", ":nohl<CR>", { desc = "no highlights" })
 -- 复制粘贴时不会替换掉保存在寄存器中的内容
-keymap.set("v", "p", '"_c<C-r>"<Esc>', { desc = "Replace and Paste" })
+set("v", "p", '"_c<C-r>"<Esc>', { desc = "Replace and Paste" })
 
 -- Alt+H 光标到这行代码的最前端
-keymap.set({ "n", "i", "v" }, "<A-h>", "^")
+set({ "n", "i", "v" }, "<A-h>", "^")
 
 -- Alt+L 光标到这行代码的末尾
-keymap.set({ "n", "i", "v" }, "<A-l>", "$")
+set({ "n", "i", "v" }, "<A-l>", "$")
 
 -- 设置 Shift+J 为退到上一个光标处
-keymap.set({ "v", "n" }, "<S-j>", "<C-o>")
+set({ "v", "n" }, "<S-j>", "<C-o>")
 -- 设置 Shift+J 为回到当前光标处
-keymap.set({ "v", "n" }, "<S-k>", "<C-i>")
+set({ "v", "n" }, "<S-k>", "<C-i>")
 -- 设置 Ctrl+f 为搜索
-keymap.set({ "i", "v", "n" }, "<C-f>", "/")
+set({ "i", "v", "n" }, "<C-f>", "/")
 
 -- 设置 gd 跳转到方法定义
 api_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
@@ -78,39 +110,36 @@ api_keymap("n", "K", "<C-I>", { noremap = true, silent = true })
 api_keymap("n", "<C-a>", "ggVG", { noremap = true, silent = true })
 api_keymap("v", "<C-a>", "<Esc>ggVG", { noremap = true, silent = true })
 
--- 设置 Ctrl-w 为删除当前缓冲区
-api_keymap("n", "<C-w>", "<cmd>bdelete | bp<CR>", { noremap = true, silent = true })
--- for hop.nvim
-local hop = require("hop")
-local directions = require("hop.hint").HintDirection
-local positions = require("hop.hint").HintPosition
 -- leader leader l
-keymap.set({ "n", "v" }, "f", function()
+set({ "n", "v" }, "f", function()
     hop.hint_camel_case({ direction = directions.AFTER_CURSOR })
 end, { desc = "Go to next any begining of words considering camel case." })
 -- leader leader h
-keymap.set({ "n", "v" }, "s", function()
+set({ "n", "v" }, "s", function()
     hop.hint_camel_case({ direction = directions.BEFORE_CURSOR })
 end, { desc = "Go to next any begining of words considering camel case." })
 
 -- suppress useless warning here
 ---@diagnostic disable: missing-fields
 -- leader leader s
-keymap.set({ "n", "v" }, "<leader><leader>s", function()
+set({ "n", "v" }, "<leader><leader>s", function()
     hop.hint_anywhere({})
 end, { desc = "Go to any char" })
 ---@diagnostic enable: missing-fields
 
 -- leader leader j
-keymap.set({ "n", "v" }, "<leader><leader>j", function()
+set({ "n", "v" }, "<leader><leader>j", function()
     hop.hint_lines({ direction = directions.AFTER_CURSOR })
 end, { desc = "Go to line below" })
 -- leader leader k
-keymap.set({ "n", "v" }, "<leader><leader>k", function()
+set({ "n", "v" }, "<leader><leader>k", function()
     hop.hint_lines({ direction = directions.BEFORE_CURSOR })
 end, { desc = "Go to line above" })
 
--- 直接返回，不执行下面的内容，写在下面只是方便查阅
+----------------- modify keymaps begin -----------------------------
+--------------------------------------------------------------------
+
+------ 直接返回，不执行下面的内容，写在下面只是方便查阅 ------------
 if true then
     return {}
 end
