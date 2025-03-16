@@ -35,6 +35,7 @@ set("n", "yy", '"+yy', { noremap = true, silent = true, desc = "Copy all line" }
 set("v", "y", '"+y', { noremap = true, silent = true, desc = "Copy all line" })
 set("n", "<C-c>", '"+yy', { noremap = true, silent = true, desc = "Copy all line" })
 set("v", "<C-c>", '"+y', { noremap = true, silent = true, desc = "Copy word" })
+
 ---------- paste ---------
 set("n", "p", '"+p', { noremap = true, silent = true, desc = "Paste from system clipboard" })
 set("v", "p", '"+p', { noremap = true, silent = true, desc = "Paste and Replace Word" })
@@ -62,6 +63,14 @@ set("n", "<CR>", "o<Esc>", { noremap = true, silent = true, desc = "Enter" })
 -- Esc
 set("i", "jk", "<Esc>")
 set("i", "jj", "<Esc>")
+
+---------- Session ----------
+set("n", "<leader>qS", function()
+    require("persistence").load()
+end, { "Restore Session" })
+set("n", "<leader>qs", function()
+    require("persistence").selece()
+end, { "Restore Session" })
 
 -- split vertical / horizonal
 set("n", "<leader>wv", "<C-w>v", { desc = "Split Window Right" })
