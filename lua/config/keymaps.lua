@@ -111,7 +111,7 @@ api_keymap("n", "K", "<C-I>", { noremap = true, silent = true })
 api_keymap("n", "<C-a>", "ggVG", { noremap = true, silent = true })
 api_keymap("v", "<C-a>", "<Esc>ggVG", { noremap = true, silent = true })
 
--- leader leader l
+-- 设置全局搜索
 set({ "n", "v" }, "f", function()
     hop.hint_camel_case({ direction = directions.AFTER_CURSOR })
 end, { desc = "Go to next any begining of words considering camel case." })
