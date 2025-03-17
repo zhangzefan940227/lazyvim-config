@@ -12,6 +12,22 @@ opt.softtabstop = 4 -- 按退格键时删除 4 个空格
 opt.expandtab = true -- 将 Tab 转换为空格
 opt.clipboard = vim.env.SSH_TTY or "" or "unnamedplus" -- Sync with system clipboard
 opt.scrolloff = 10 -- Lines of context
+opt.fillchars = {
+    foldopen = "",
+    foldclose = "",
+    fold = " ",
+    foldsep = " ",
+    diff = "╱",
+    eob = " ",
+    vert = "┃", -- 使用更粗的竖线作为垂直分割线
+    horiz = "━", -- 使用更粗的横线作为水平分割线
+    horizup = "┻",
+    horizdown = "┳",
+    vertleft = "┫",
+    vertright = "┣",
+    verthoriz = "╋",
+}
+
 -- 直接返回，不执行下面的内容，写在下面只是方便查阅
 if true then
     return {}
