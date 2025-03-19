@@ -25,7 +25,7 @@ return {
                 "-Dosgi.bundles.defaultStartLevel=4",
                 "-Declipse.product=org.eclipse.jdt.ls.core.product",
                 "-Dlog.level=ALL",
-                "-Xmx1G", -- 设置 JVM 最大内存
+                "-Xmx4G", -- 设置 JVM 最大内存
                 "--add-modules=ALL-SYSTEM",
                 "--add-opens",
                 "java.base/java.util=ALL-UNNAMED",
