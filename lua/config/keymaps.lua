@@ -34,11 +34,27 @@ set("n", "q", "<nop>", { desc = "record a macro" })
 ----------------- modify keymaps begin -----------------------------
 --------- debug ---------
 set("n", "<F5>", dap.continue, { desc = "Start/Continue Debugging" })
-set("n", "<F8>", dap.step_over, { desc = "Step Over" })
-set("n", "<F7>", dap.step_into, { desc = "Step Into" })
-set("n", "<C-F7>", dap.step_out, { desc = "Step Out" })
+set("n", "<F8>", dap.step_over, { desc = "Step Over" }) -- 单步跳过
+set("n", "<F7>", dap.step_into, { desc = "Step Into" }) -- 单步进入
+set("n", "<C-F7>", dap.step_out, { desc = "Step Out" }) -- 单步跳出
 set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Toggle Breakpoint" })
 set("n", "<leader>du", dapui.toggle, { desc = "Toggle DAP UI" })
+set("n", "<leader>dr", dap.restart, { desc = "Restart Debugging" }) -- 重启调试
+set("n", "<leader>de", dapui.eval, { desc = "Evaluate Expression" }) -- 评估表达式
+set("n", "<leader>dh", function()
+    dapui.float_element("hover") -- 显示变量悬停信息
+end, { desc = "Hover Information" })
+
+-- 变量查看
+set("n", "<leader>dv", function()
+    dapui.float_element("scopes") -- 显示变量作用域
+end, { desc = "View Variables" })
+
+-- 调试日志
+vim.keymap.set("n", "<leader>dL", function()
+    dap.set_log_level("DEBUG") -- 设置调试日志级别
+    print("Debug log level set to DEBUG")
+end, { desc = "Set Debug Log Level" })
 
 ---------- copy ----------
 set("n", "yy", '"+yy', { noremap = true, silent = true, desc = "Copy all line" })
