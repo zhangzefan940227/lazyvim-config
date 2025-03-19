@@ -3,12 +3,6 @@ return {
         "mfussenegger/nvim-dap",
         config = function()
             local dap = require("dap")
-            dap.adapters.android = {
-                type = "executable",
-                command = "adb",
-                args = { "connect", "127.0.0.1:5555" }, -- 连接到 Android 设备或模拟器
-            }
-
             dap.adapters.java = {
                 type = "executable",
                 command = "java",
@@ -28,7 +22,6 @@ return {
             -- 配置 cppdbg 调试适配器
             dap.adapters.cppdbg = {
                 id = "cppdbg",
-                name = "cppdbg",
                 type = "executable",
                 command = "/home/zzfan/Environment/cpptools-linux-x64/extension/debugAdapters/bin/OpenDebugAD7",
             }
@@ -92,4 +85,16 @@ return {
             require("nvim-dap-virtual-text").setup()
         end,
     },
+
+    -- {
+    --     "nvim-telescope/telescope.nvim",
+    --     "nvim-telescope/telescope-dap.nvim",
+    --     requires = {
+    --         "nvim-telescope/telescope.nvim",
+    --         "mfussenegger/nvim-dap",
+    --     },
+    --     config = function()
+    --         require("telescope").load_extension("dap")
+    --     end,
+    -- },
 }
