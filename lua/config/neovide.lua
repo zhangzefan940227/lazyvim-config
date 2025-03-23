@@ -2,7 +2,7 @@ if vim.g.neovide then
     vim.opt.linespace = 0
 
     -- 缩放比例
-    vim.g.neovide_scale_factor = 0.8
+    vim.g.neovide_scale_factor = 0.9
 
     -- 文本伽马和对比度
     vim.g.neovide_text_gamma = 0.0
@@ -11,8 +11,8 @@ if vim.g.neovide then
     -- 顶部、底部、右侧、左侧的内边距
     vim.g.neovide_padding_top = 2
     vim.g.neovide_padding_bottom = 2
-    vim.g.neovide_padding_right = 2
-    vim.g.neovide_padding_left = 2
+    vim.g.neovide_padding_right = 5
+    vim.g.neovide_padding_left = 5
     -- 窗口透明度（内容和标题栏统一）
     vim.g.neovide_transparency = 0.9
 

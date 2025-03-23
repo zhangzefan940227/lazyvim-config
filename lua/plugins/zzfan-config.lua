@@ -1,10 +1,4 @@
 return {
-    ------ markdown ------
-    {
-        "OXY2DEV/markview.nvim",
-        lazy = false,
-    },
-
     ----- 多窗口的边框样式 -----
     {
         "nvim-zh/colorful-winsep.nvim",
