@@ -17,6 +17,7 @@ local dap = require("dap")
 local dapui = require("dapui")
 --------------------------------------------------------------------
 ----------------- delete unused keymaps begin ----------------------
+--------------------------------------------------------------------
 del("n", "<leader><space>", { desc = "find files (root dir)" })
 del("n", "<leader>-", { desc = "split window below" })
 del("n", "<leader>|", { desc = "split window right" })
@@ -27,15 +28,17 @@ del("n", "<leader>L", { desc = "LazyVim ChangeLog" })
 del("n", "t", { desc = "other" })
 del("n", "<leader>qq")
 set("n", "q", "<nop>", { desc = "record a macro" })
+--------------------------------------------------------------------
 ----------------- delete unused keymaps end ------------------------
 --------------------------------------------------------------------
 
 --------------------------------------------------------------------
 ----------------- modify keymaps begin -----------------------------
---------- debug ---------
+--------------------------------------------------------------------
+
+------------------------------- debug ------------------------------
 set("n", "<leader>du", dapui.toggle, { desc = "Toggle DAP UI" })
 set("n", "<leader>de", dapui.eval, { desc = "Evaluate Expression" }) -- 评估表达式
-
 set("n", "<F5>", dap.continue, { desc = "Start/Continue Debugging" })
 set("n", "<F8>", dap.step_over, { desc = "Step Over" }) -- 单步跳过
 set("n", "<F7>", dap.step_into, { desc = "Step Into" }) -- 单步进入
@@ -71,111 +74,131 @@ set("n", "<leader>dL", function()
     print("Debug log level set to DEBUG")
 end, { desc = "Set Debug Log Level" })
 
----------- copy ----------
+------------------------------- copy ------------------------------
 set("n", "yy", '"+yy', { noremap = true, silent = true, desc = "Copy all line" })
 set("v", "y", '"+y', { noremap = true, silent = true, desc = "Copy all line" })
 set("n", "<C-c>", '"+yy', { noremap = true, silent = true, desc = "Copy all line" })
 set("v", "<C-c>", '"+y', { noremap = true, silent = true, desc = "Copy word" })
 
----------- paste ---------
+------------------------------ paste -------------------------------
 set("n", "p", '"+p', { noremap = true, silent = true, desc = "Paste from system clipboard" })
 set("v", "p", '"+p', { noremap = true, silent = true, desc = "Paste and Replace Word" })
 set({ "n", "v" }, "<C-v>", '"+p', { noremap = true, silent = true, desc = "Paste from system clipboard" })
 set("i", "<C-v>", "<C-r>+", { noremap = true, silent = true, desc = "Paste from system clipboard" })
 
----------- cut ----------
+-------------------------------- cut -------------------------------
 set("n", "dd", '"+dd', { noremap = true, silent = true, desc = "Cut All Line" })
 set("v", "d", '"+d', { noremap = true, silent = true, desc = "Cut Word" })
 set("n", "<C-x>", '"+dd', { noremap = true, silent = true, desc = "Cut All Line" })
 set("v", "<C-x>", '"+d', { noremap = true, silent = true, desc = "Cut Word" })
 set("c", "<C-v>", "<C-R>+\\>", { noremap = true, silent = true, desc = "Paste from system clipboard" })
 
---------- quit ----------
-set("n", "qq", "<cmd>qa<CR>", { noremap = true, desc = "Quit All" })
-set("n", "<C-w>", "<cmd>wq<CR>", { noremap = true, desc = "Quit All" })
+------------------------------- quit -------------------------------
+set("n", "qq", "<cmd>wqa<CR>", { noremap = true, desc = "Quit All" })
+set("n", "wq", "<cmd>wq<CR>", { noremap = true, desc = "Quit All" })
 
---------- save ----------
+------------------------------- save -------------------------------
 set("n", "<leader>fs", "<cmd>w<cr><esc>", { noremap = true, desc = "save" })
 
--- Enter
-set("n", "<CR>", "o<Esc>", { noremap = true, silent = true, desc = "Enter" })
+--------------------------------------------------------------------
+------------------------------ Enter -------------------------------
+-- set("n", "<CR>", "o<Esc>", { noremap = true, silent = true, desc = "Enter" })
 
--- Esc
+-- 定义安全映射函数
+local function conditional_enter()
+    -- 检查是否可编辑且非排除文件类型
+    local excluded_ft = { "NvimTree", "TelescopePrompt", "alpha", "neo-tree", "toggleterm" }
+    local is_editable = vim.bo.modifiable and not vim.bo.readonly
+    local is_allowed_ft = not vim.tbl_contains(excluded_ft, vim.bo.filetype)
+
+    if is_editable and is_allowed_ft then
+        -- 执行 o<Esc>（插入新行并退出插入模式）
+        return "o<Esc>"
+    else
+        -- 回退到默认的 <Enter> 行为
+        return "<CR>"
+    end
+end
+
+-- 设置条件映射（普通模式下）
+set("n", "<CR>", conditional_enter, { expr = true, desc = "智能回车映射" })
+
+------------------------------- 搜索 -------------------------------
+set({ "i", "v", "n" }, "<C-f>", "/")
+
+------------------------------- Esc --------------------------------
 set("i", "jk", "<Esc>")
 set("i", "jj", "<Esc>")
 
--- split vertical / horizonal
+-------------------- split vertical / horizonal --------------------
 set("n", "<leader>wv", "<C-w>v", { desc = "Split Window Right" })
 set("n", "<leader>wh", "<C-w>s", { desc = "Split Window Below" })
 
--- Terminal Buffer
+-------------------------- Terminal Buffer -------------------------
 set({ "v", "n" }, "<leader>t", ":term<CR>", { desc = "Terminal Buffer" })
 
--- redo
+------------------------------- redo -------------------------------
 set("n", "U", "<C-r>", { desc = "Redo" })
 
--- no highlights
+-------------------------- no highlights ---------------------------
 set("n", "<leader>nl", ":nohl<CR>", { desc = "no highlights" })
--- 复制粘贴时不会替换掉保存在寄存器中的内容
+
+----------- 复制粘贴时不会替换掉保存在寄存器中的内容 ---------------
 set("v", "p", '"_c<C-r>"<Esc>', { desc = "Replace and Paste" })
 
--- Alt+H 光标到这行代码的最前端
+------------------------ 设置 Ctrl-a 为全选 ------------------------
+set("n", "<C-a>", "ggVG", { noremap = true, silent = true })
+set("v", "<C-a>", "<Esc>ggVG", { noremap = true, silent = true })
+
+--------------------------------------------------------------------
+-------------------------- 光标跳转---------------------------------
+-- 行首
 set({ "n", "i", "v" }, "<A-h>", "^")
 
--- Alt+L 光标到这行代码的末尾
+-- 行尾
 set({ "n", "i", "v" }, "<A-l>", "$")
 
--- 设置 Shift+J 为退到上一个光标处
+-- 退到上一个光标处
 set({ "v", "n" }, "<S-j>", "<C-o>")
--- 设置 Shift+J 为回到当前光标处
+
+-- 回到当前光标处
 set({ "v", "n" }, "<S-k>", "<C-i>")
--- 设置 Ctrl+f 为搜索
-set({ "i", "v", "n" }, "<C-f>", "/")
 
--- 设置 gd 跳转到方法定义
-api_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
+-- 跳转到方法定义
+set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
 
--- 设置 ga 跳转到方法实现
-api_keymap("n", "ga", "<cmd>lua vim.lsp.buf.implementation()<CR>", { noremap = true, silent = true })
+-- 跳转到方法实现
+set("n", "ga", "<cmd>lua vim.lsp.buf.implementation()<CR>", { noremap = true, silent = true })
 
 -- 查找引用
-api_keymap("n", "ga", "<cmd>lua vim.lsp.buf.references()<CR>", { noremap = true, silent = true })
+set("n", "ga", "<cmd>lua vim.lsp.buf.references()<CR>", { noremap = true, silent = true })
 
--- 设置 j 返回到上一个光标位置
-api_keymap("n", "J", "<c-o>", { noremap = true, silent = true })
-
--- 设置 H 跳转到下一个光标位置
-api_keymap("n", "K", "<C-I>", { noremap = true, silent = true })
-
--- 设置 Ctrl-a 为全选
-api_keymap("n", "<C-a>", "ggVG", { noremap = true, silent = true })
-api_keymap("v", "<C-a>", "<Esc>ggVG", { noremap = true, silent = true })
-
--- 设置全局搜索
-set({ "n", "v" }, "f", function()
-    hop.hint_camel_case({ direction = directions.AFTER_CURSOR })
-end, { desc = "Go to next any begining of words considering camel case." })
--- leader leader h
+-- 向上跳转到单词首字母
 set({ "n", "v" }, "s", function()
     hop.hint_camel_case({ direction = directions.BEFORE_CURSOR })
 end, { desc = "Go to next any begining of words considering camel case." })
 
--- suppress useless warning here
----@diagnostic disable: missing-fields
--- leader leader s
+-- 向下跳转到单词首字母
+set({ "n", "v" }, "f", function()
+    hop.hint_camel_case({ direction = directions.AFTER_CURSOR })
+end, { desc = "Go to next any begining of words considering camel case." })
+
+-- 跳转到任意位置
 set({ "n", "v" }, "<leader><leader>s", function()
     hop.hint_anywhere({})
 end, { desc = "Go to any char" })
----@diagnostic enable: missing-fields
 
--- leader leader j
-set({ "n", "v" }, "<leader><leader>j", function()
-    hop.hint_lines({ direction = directions.AFTER_CURSOR })
-end, { desc = "Go to line below" })
--- leader leader k
+-- 向上跳转到每行行首
 set({ "n", "v" }, "<leader><leader>k", function()
     hop.hint_lines({ direction = directions.BEFORE_CURSOR })
 end, { desc = "Go to line above" })
+
+-- 向下跳转到每行行首
+set({ "n", "v" }, "<leader><leader>j", function()
+    hop.hint_lines({ direction = directions.AFTER_CURSOR })
+end, { desc = "Go to line below" })
+-------------------------- 光标跳转---------------------------------
+--------------------------------------------------------------------
 
 ----------------- modify keymaps begin -----------------------------
 --------------------------------------------------------------------

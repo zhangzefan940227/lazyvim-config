@@ -8,6 +8,7 @@
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 
 -- 直接返回，不执行下面的内容，写在下面只是方便查阅
+
 if true then
     return {}
 end
