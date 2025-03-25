@@ -95,7 +95,6 @@ set("c", "<C-v>", "<C-R>+\\>", { noremap = true, silent = true, desc = "Paste fr
 
 ------------------------------- quit -------------------------------
 set("n", "qq", "<cmd>wqa<CR>", { noremap = true, desc = "Quit All" })
-set("n", "wq", "<cmd>wq<CR>", { noremap = true, desc = "Quit All" })
 
 ------------------------------- save -------------------------------
 set("n", "<leader>fs", "<cmd>w<cr><esc>", { noremap = true, desc = "save" })
