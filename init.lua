@@ -2,3 +2,4 @@
 require("config.lazy")
 require("config.neovide")
 require("config.dap-option")
+require("config.jdtls")

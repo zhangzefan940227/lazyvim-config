@@ -6,7 +6,7 @@ return {
             dap.adapters.java = {
                 type = "executable",
                 command = "java",
-                args = { "-jar", vim.fn.expand("~/Environment/jdt-language-server-1.45.0/plugins/*.jar") }, -- 替换为你的 jdtls jar 路径
+                args = { "-jar", vim.fn.expand("~/Environment/jdt-language-server-latest/plugins/*.jar") }, -- 替换为你的 jdtls jar 路径
             }
 
             dap.configurations.java = {
@@ -85,16 +85,4 @@ return {
             require("nvim-dap-virtual-text").setup()
         end,
     },
-
-    -- {
-    --     "nvim-telescope/telescope.nvim",
-    --     "nvim-telescope/telescope-dap.nvim",
-    --     requires = {
-    --         "nvim-telescope/telescope.nvim",
-    --         "mfussenegger/nvim-dap",
-    --     },
-    --     config = function()
-    --         require("telescope").load_extension("dap")
-    --     end,
-    -- },
 }

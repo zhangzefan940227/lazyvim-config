@@ -134,7 +134,7 @@ set("n", "<leader>wv", "<C-w>v", { desc = "Split Window Right" })
 set("n", "<leader>wh", "<C-w>s", { desc = "Split Window Below" })
 
 -------------------------- Terminal Buffer -------------------------
-set({ "v", "n" }, "<leader>t", ":term<CR>", { desc = "Terminal Buffer" })
+set({ "v", "n" }, "<leader>tn", ":term<CR>", { desc = "Terminal Buffer" })
 
 ------------------------------- redo -------------------------------
 set("n", "U", "<C-r>", { desc = "Redo" })
@@ -167,7 +167,7 @@ set({ "v", "n" }, "<S-k>", "<C-i>")
 set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
 
 -- 跳转到方法实现
-set("n", "ga", "<cmd>lua vim.lsp.buf.implementation()<CR>", { noremap = true, silent = true })
+set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", { noremap = true, silent = true })
 
 -- 查找引用
 set("n", "ga", "<cmd>lua vim.lsp.buf.references()<CR>", { noremap = true, silent = true })
