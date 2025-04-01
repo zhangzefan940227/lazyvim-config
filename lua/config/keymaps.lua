@@ -134,7 +134,7 @@ set("n", "<leader>wv", "<C-w>v", { desc = "Split Window Right" })
 set("n", "<leader>wh", "<C-w>s", { desc = "Split Window Below" })
 
 -------------------------- Terminal Buffer -------------------------
-set({ "v", "n" }, "<leader>tn", ":term<CR>", { desc = "Terminal Buffer" })
+set({ "v", "n" }, "<leader>tt", ":term<CR>", { desc = "Terminal Buffer" })
 
 ------------------------------- redo -------------------------------
 set("n", "U", "<C-r>", { desc = "Redo" })
